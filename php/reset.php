@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST['submit'])){
-    $email = //complete this;
-    $newpassword = //complete this;
+    $email = $_POST['email'];
+    $newpassword = $_POST['password'];
 
     resetPassword($email, $password);
 }
@@ -9,7 +9,17 @@ if(isset($_POST['submit'])){
 function resetPassword($email, $password){
     //open file and check if the username exist inside
     //if it does, replace the password
-}
-echo "HANDLE THIS PAGE";
 
-
+    $file = fopen('./../storage/users.csv', 'r');
+    while (!feof($file)) {
+        $line = fgetcsv($file);
+        if($line[1] == $email) {
+            $line[2 ] == $password;
+            $file = fopen('./../storage/users.csv', 'w');
+            
+            fputcsv($file, $line);
+            echo ("<style=color:red; text-align:center">"Password was successfully changed + <br> + <a href='../forms/login.html'>Login Form</a>");
+            fclose($file);
+    }
+    echo "email Not Found";
+    }}
