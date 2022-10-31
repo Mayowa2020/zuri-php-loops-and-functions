@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $newpassword = $_POST['password'];
@@ -18,7 +20,10 @@ function resetPassword($email, $password){
             $file = fopen('./../storage/users.csv', 'w');
             
             fputcsv($file, $line);
-            echo ("<style=color:red; text-align:center">"Password was successfully changed + <br> + <a href='../forms/login.html'>Login Form</a>");
+            echo '<scripts>
+            alert("Password was successfully changed");
+            window.location.href="../login.php.html";
+            </scripts>';
             fclose($file);
     }
     echo "email Not Found";

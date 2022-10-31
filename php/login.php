@@ -1,83 +1,47 @@
 <?php
-if(isset($_POST['submit'])){
-    $email = $POST['email'];
-    $password = $POST ['password'];
-
-loginUser($email, $password);
-
+session_start();
+$email = $_POST['email'];
+if(isset($_POST['submit'])){    
+    $password = $_POST['password'];
+       
+    loginUser($email, $password);
+    
 }
 
-function loginUser($email, $password){
+$user_data = array(
+    'fullname' => $fullname,
+    'email' => $email,
+    'password' => $password);
+    
+function loginUser($email, $password)
+{
+    
+$user_data = array(
+    'email' => $email,
+    'password' => $password);
     /*
-        Finish this function to check if email and password 
-    from file match that which is passed from the form
-    */
-    
+     Finish this function to check if email and password 
+     from file match that which is passed from the form
+     */
+
     // open the csv file in read mode
+$file_read = fopen('../storage/users.csv', 'r');
+// $file_write = fopen('../storage/users.csv', 'w');
+while(($user_data == fgetcsv($file_read))!== false) {
+    if ($user_data[1] == $email) {
+        $user_data[2] == $password;
+        echo '<scripts>
+        alert("Succesfully signed in");
+        window.location.href="../dashboard.php.html";
+        </scripts>';
+    }
+    else {
+        echo '<scripts>
+        alert("Sign in unsuccessful, try logging in again");
+              </scripts>';
+    }
+}
 
-    $file = fopen('../storage/users.csv', 'r');
-    if ($file) { // check if file opened successfully
-        //loop through the file to checkif data exist
-    while (($row = fgetcsv($file)) !==false) {
-        // if ($row[1] == $email && $row[2] == $password) {
-        //     $success = true;
-        //     break;
-        //     }
-        // }
-        // fclose($file);
+fclose($file_read);
 
-        // if ($success) {
-        //     session_start();
-        //     $_SESSION['email'] = $email;
-        //     $_SESSION['password'] = $password;
-        //     session_write_close();
-        //     header("location: ./../");
-        // }else{
-        //     echo
-        // }    
-            
-        
-        // $rows[] = $row;
-        
-        switch($email && $password) {
-            case ($row[1] == $email && $row[2] == $password);
-                    echo 'Login successful';
-                    break;
-
-            case ($row[1] == $email && $row[2] != $password);
-            echo ' Invalid Password';
-            break;
-
-            case($row[1] =! $email && $row[2] == $password);
-            echo 'Invalid Email';
-            break;
-            
-            default: echo 'Incorrect Credentials';
-        }
-    }}
-        
-        // check both email and password match
-        // if ($row[0] == $email && $row[1] == $password) {
-        //     echo 'Login successful';
-        //     exit();
-        //     } 
-        //     // email matches but password does not match
-        //     else if ($row[0] == $email && $row[1] != $password) {
-        //         echo ' Invalid Password';
-        //     // exit();    
-        //     }
-        //     // password matches but email does not match
-        //     else if ($row[0] =! $email && $row[1] == $password) {
-        //         echo ' Wrong Email';
-        //     // exit();    
-        //     } 
-        //     // both email and password does not match
-        //     else {
-        //         echo 'Incorrect Credentials';
-        //         // exit();
-        //   
-     // close the file
-     fclose($file);      }
-                
-    
-   
+}

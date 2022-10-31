@@ -3,25 +3,21 @@
 session_start();
 
 // Unset all of the session variables.
-$_SESSION = array();
+$_SESSION = array($fullname, $email, $password);
 
-function logout(){
+function logout($fullname, $email, $password){
     /*
 Check if the existing user has a session
 if it does
 */
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
-);
-}else{
-    
+
+// remove all session variables
+session_unset();
+$_SESSION['fullname'] = $fullname;
+$_SESSION['email'] = $email;
+$_SESSION['password'] = $password;
+
 }
-
-// Finally destroy the session and redirect to login page.
+// destroy the session
 session_destroy();
-header("location: ../../../forms/login.html");
-
-?>
+header("location: ../../../forms/login.html");?>

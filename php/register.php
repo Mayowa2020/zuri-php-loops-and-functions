@@ -46,7 +46,7 @@ function registerUser($fullname, $email, $password)
 
     $user_data = [$fullname, $email, $password];
     // Open/Create the file and append data
-    $file = fopen('./../storage/users.csv', 'ra+');
+    $file = fopen('./../storage/users.csv', 'a');
 
     while (!feof($file)) {
         $row = fgetcsv($file);
@@ -58,16 +58,9 @@ function registerUser($fullname, $email, $password)
             fputcsv($file, $user_data);
 
         }
-        echo "User Successfully Registered";
+        echo "User Successfully Registered...";
     }
     fclose($file);
 
     echo $fullname . " ", $email, " ", $password;
-    // read file and print it to screen
-    $file = fopen('file.csv', 'r');
-    while (!feof($file)) {
-        $user_data = fgetcsv($file);
-        echo $row[0] . ' ' . $row[1] . ' ' . $row[2] . '<br>';
     }
-
-}
